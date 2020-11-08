@@ -5,9 +5,13 @@ import os
 from clang.cindex import Config
 from clang.cindex import CursorKind
 from clang.cindex import Index
+from codesim.GST import GST_sim
 
-exclude_types = set([(CursorKind.CALL_EXPR, "operator<<"),
-                     (CursorKind.USING_DIRECTIVE, "")])
+exclude_types = set([(CursorKind.CALL_EXPR, "operator<<"),  # exclude I/O statement
+                     (CursorKind.CALL_EXPR, "operator>>"),
+                     (CursorKind.CALL_EXPR, "printf"),
+                     (CursorKind.CALL_EXPR, "scanf"),
+                     (CursorKind.USING_DIRECTIVE, "")])  # exclude "using namespace ..." statement
 
 def get_tokens(cursor, filepath):
     def _traverse_preorder(cursor, token_list):  # There is a method called "walk_preorder" in Cursor class. Here we need to ignore some subtrees so we implement on our own.
@@ -16,7 +20,7 @@ def get_tokens(cursor, filepath):
         if (cursor.kind, cursor.spelling) in exclude_types:
             return
         
-        token_list.append(cursor.kind)
+        token_list.append(cursor.kind.value)
         for child in cursor.get_children():
             _traverse_preorder(child, token_list)
 
@@ -47,13 +51,19 @@ def main():
         exit(1)
     
     index = Index.create()
-    token_list1 = get_tokens(index.parse(args.code1).cursor, args.code1)
-    token_list2 = get_tokens(index.parse(args.code2).cursor, args.code2)
+    token_list1 = get_tokens(index.parse(args.code1, args=["-std=c++11"]).cursor, args.code1)
+    token_list2 = get_tokens(index.parse(args.code2, args=["-std=c++11"]).cursor, args.code2)
 
     if args.verbose:
-        print("Tokens list of code1: \n", token_list1)
-        print("Tokens list of code2: \n\n", token_list2)
+        print("Token-list of code1:")
+        for id in token_list1:
+            print("\t", CursorKind.from_id(id).name)
+        print("Token-list of code2:")
+        for id in token_list2:
+            print("\t", CursorKind.from_id(id).name)
+        print("\n")
 
+    print(GST_sim(token_list1, token_list2))
 
 if __name__ == "__main__":
     main()

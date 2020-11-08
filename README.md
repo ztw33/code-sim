@@ -4,7 +4,7 @@ A tool for measuring the similarity between two c++ code files.
 ## Requirements
 python >= 3.6.9
 
-pip >= 9.0.3
+pip >= 18.0
 
 clang == 6.0.0
 
