@@ -24,9 +24,9 @@ class AST(object):
         Get token sequence from cursor when preordered traversing.(exclude node in 'exclude_types')
         """
         def _traverse_preorder(cursor, token_list):  # There is a method called "walk_preorder" in Cursor class. Here we need to ignore some subtrees so we implement on our own.
-            if cursor.location.file and cursor.location.file.name != self.filepath:
+            if cursor.location.file and cursor.location.file.name != self.filepath:  # exclude "#include <...>"
                 return
-            if (cursor.kind, cursor.spelling) in exclude_types:
+            if (cursor.kind, cursor.spelling) in exclude_types:  # exclude node in 'exclude_types'
                 return
             
             token_list.append(cursor)

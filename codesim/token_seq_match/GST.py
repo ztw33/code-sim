@@ -45,6 +45,8 @@ class GST(object):
     
     @property
     def similarity(self):
+        if len(self.tokens1) + len(self.tokens2) == 0:
+            return 0
         length = 0
         for tile in self.tiles:
             length += tile[2]

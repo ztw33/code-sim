@@ -5,7 +5,6 @@ import os
 from clang.cindex import Config
 from codesim.ast.AST import AST
 from codesim.token_seq_match.GST import GST
-# from clang.cindex import CursorKind
 
 verbose = False
 MML = 3  # minimum match length in GST
@@ -25,8 +24,11 @@ def config_libclang():
     if len(res[1]) > 0:
         print("Something wrong with your llvm-config command.", file=sys.stderr)
         print(res[1], file=sys.stderr)
-        exit(1)    
+        exit(1)
     libclang_path = res[0].strip() + "/libclang.so"
+    if not os.path.exists(libclang_path):
+        print("Cannot find libclang.so!", file=sys.stderr)
+        exit(1)
     if verbose:
         print("Found libclang.so path in: ", libclang_path, "\n")
     Config.set_library_file(libclang_path)
