@@ -13,7 +13,7 @@ Linux (Best: Ubuntu 18.04 LTS Bionic)
 
 Before installing codesim, make sure you have already installed python and pip. And install clang and llvm using command below:
 ```shell
-$ sudo apt-get install clang-6.0 libclang-dev-6.0 llvm-6.0
+$ sudo apt-get install clang-6.0 libclang-6.0-dev llvm-6.0
 ```
 Make sure you can find the file "libclang.so" in the path which can been seen after you successfully execute "llvm-config --libdir".
 ```shell
