@@ -59,14 +59,14 @@ Found libclang.so path in:  /usr/lib/llvm-6.0/lib/libclang.so
 
 Similar snippets:
 ================ 1 ================
-testcase/1.cpp: line 10 -- line 26
-testcase/2.format.cpp: line 9 -- line 18
+test1.cpp: line 10 -- line 26
+test2.cpp: line 9 -- line 18
 ================ 2 ================
-testcase/1.cpp: line 6 -- line 10
-testcase/2.format.cpp: line 5 -- line 8
+test1.cpp: line 6 -- line 10
+test2.cpp: line 5 -- line 8
 ================ 3 ================
-testcase/1.cpp: line 29 -- line 35
-testcase/2.format.cpp: line 23 -- line 29
+test1.cpp: line 29 -- line 35
+test2.cpp: line 23 -- line 29
 
 Similarity: 90.43%
 ```
